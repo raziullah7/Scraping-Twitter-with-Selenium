@@ -1,5 +1,8 @@
+# for implicit waits
 import time
+# for DataFrames
 import pandas as pd
+# for chrome driver
 from selenium import webdriver
 # for XPATH
 from selenium.webdriver.common.by import By
@@ -7,16 +10,20 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+# ------------------------------------------------------------------------------------------------------------------
+# setting up driver and chrome options
 options = webdriver.ChromeOptions()
 options.add_experimental_option("detach", True)
 driver = webdriver.Chrome(options=options)
+# driver.maximize_window()
 
 
+# ------------------------------------------------------------------------------------------------------------------
 # function for logging in the user with static username and password
 def user_login():
     website = "https://twitter.com/"
     driver.get(website)
-    time.sleep(2)
+    time.sleep(5)
 
     # click on login button
     signin_button = driver.find_element(By.XPATH, "//a[@href='/login']")
@@ -24,24 +31,23 @@ def user_login():
     time.sleep(2)
 
     # putting in the username
-    username = driver.find_element(By.XPATH,
-                                   '//input[@class="r-30o5oe r-1dz5y72 r-13qz1uu r-1niwhzg r-17gur6a r-1yadl64 r-deolkf '
-                                   'r-homxoj r-poiln3 r-7cikom r-1ny4l3l r-t60dpp r-fdjqy7"]')
-    username.send_keys("the_username")
+    username = driver.find_element(
+        By.XPATH, '//input[@class="r-30o5oe r-1dz5y72 r-13qz1uu r-1niwhzg r-17gur6a r-1yadl64 r-deolkf '
+                  'r-homxoj r-poiln3 r-7cikom r-1ny4l3l r-t60dpp r-fdjqy7"]')
+    username.send_keys("you_know_razi")     # the_username
 
     # clicking the "Next" button
-    next_button = driver.find_element(By.XPATH,
-                                      '//div[contains(@class,"css-175oi2r r-sdzlij r-1phboty r-rs99b7 r-lrvibr '
-                                      'r-ywje51 r-usiww2 r-13qz1uu r-2yi16 r-1qi8awa r-ymttw5 r-1loqt21 r-o7ynqc'
-                                      ' r-6416eg r-1ny4l3l")]')
+    next_button = driver.find_element(
+        By.XPATH, '//div[contains(@class,"css-175oi2r r-sdzlij r-1phboty r-rs99b7 r-lrvibr r-ywje51 '
+                  'r-usiww2 r-13qz1uu r-2yi16 r-1qi8awa r-ymttw5 r-1loqt21 r-o7ynqc r-6416eg r-1ny4l3l")]')
     next_button.click()
     time.sleep(2)
 
     # putting in the password
-    password = driver.find_element(By.XPATH,
-                                   '//input[@class="r-30o5oe r-1dz5y72 r-13qz1uu r-1niwhzg r-17gur6a r-1yadl64 '
-                                   'r-deolkf r-homxoj r-poiln3 r-7cikom r-1ny4l3l r-t60dpp r-fdjqy7"]')
-    password.send_keys("the_pasword")
+    password = driver.find_element(
+        By.XPATH, '//input[@class="r-30o5oe r-1dz5y72 r-13qz1uu r-1niwhzg r-17gur6a r-1yadl64 r-deolkf '
+                  'r-homxoj r-poiln3 r-7cikom r-1ny4l3l r-t60dpp r-fdjqy7"]')
+    password.send_keys("finalflash77.")     # the_password
 
     # clicking the "Login" button
     login_button = driver.find_element(By.XPATH, '//div[@data-testid="LoginForm_Login_Button"]')
@@ -49,6 +55,7 @@ def user_login():
     time.sleep(2)
 
 
+# ------------------------------------------------------------------------------------------------------------------
 # function that takes a tweet as argument and returns the username and tweet text as list
 def get_tweet(element):
     try:
@@ -61,6 +68,7 @@ def get_tweet(element):
     return tweet_data
 
 
+# ------------------------------------------------------------------------------------------------------------------
 # scrapes the current view from the page that appears after searching "Python" on Twitter
 def scrape_screen():
     # getting the website
@@ -117,6 +125,7 @@ def scrape_screen():
     print(df_tweets)
 
 
+# ------------------------------------------------------------------------------------------------------------------
 # used to infinitely scroll a page defined by the static Twitter url
 def infinite_scrolling():
     # getting the website
@@ -135,6 +144,8 @@ def infinite_scrolling():
             last_height = new_height
 
 
+# ------------------------------------------------------------------------------------------------------------------
+# main function
 user_login()
 scrape_screen()
 # infinite_scrolling()
